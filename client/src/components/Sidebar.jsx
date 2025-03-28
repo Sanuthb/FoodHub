@@ -21,7 +21,7 @@ const Sidebar = () => {
         {user?.role === "admin" ? (
           <h2 className="text-xl font-bold mb-4">Admin Panel</h2>
         ) : (
-          <h2 className="text-xl font-bold mb-4">Resturant Panel</h2>
+          <h2 className="text-xl font-bold mb-4">Restaurant  Panel</h2>
         )}
         {user?.role === "admin" ? (
           <ul>
