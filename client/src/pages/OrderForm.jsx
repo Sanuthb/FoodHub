@@ -4,6 +4,7 @@ import axios from "axios";
 import { clearCart } from "../redux/Slice/cartSlice"; // Clear cart after order
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 const OrderForm = () => {
   const { cartItems, totalAmount } = useSelector((state) => state.cart);
@@ -50,39 +51,44 @@ const OrderForm = () => {
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <h2 className="text-3xl font-semibold mb-4">Confirm Your Order</h2>
+    <>
+      <Navbar />
+      <div className="container mx-auto p-6">
+        <h2 className="text-3xl font-semibold mb-4">Confirm Your Order</h2>
 
-      <form
-        onSubmit={handleOrder}
-        className="bg-white shadow-md p-6 rounded-lg max-w-md"
-      >
-        <div className="mb-4">
-          <label className="block text-lg font-medium">Delivery Address</label>
-          <textarea
-            className="w-full p-3 border rounded-md mt-2"
-            rows="3"
-            placeholder="Enter your address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            required
-          ></textarea>
-        </div>
-
-        <div className="mb-4">
-          <h3 className="text-xl font-semibold">
-            Total Price: Rs {totalAmount}
-          </h3>
-        </div>
-
-        <button
-          type="submit"
-          className="bg-orange-500 text-white px-6 py-2 rounded-md w-full"
+        <form
+          onSubmit={handleOrder}
+          className="bg-white shadow-md p-6 rounded-lg max-w-md"
         >
-          Place Order
-        </button>
-      </form>
-    </div>
+          <div className="mb-4">
+            <label className="block text-lg font-medium">
+              Delivery Address
+            </label>
+            <textarea
+              className="w-full p-3 border rounded-md mt-2"
+              rows="3"
+              placeholder="Enter your address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              required
+            ></textarea>
+          </div>
+
+          <div className="mb-4">
+            <h3 className="text-xl font-semibold">
+              Total Price: Rs {totalAmount}
+            </h3>
+          </div>
+
+          <button
+            type="submit"
+            className="bg-orange-500 text-white px-6 py-2 rounded-md w-full"
+          >
+            Place Order
+          </button>
+        </form>
+      </div>
+    </>
   );
 };
 

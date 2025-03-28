@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   removeFromCart,
@@ -8,12 +8,37 @@ import {
 import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import axios from "axios";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { cartItems, totalAmount } = useSelector((state) => state.cart);
-  const { user } = useSelector((state) => state.auth);
+  const { user,token } = useSelector((state) => state.auth);
+  const [payment,setPayment] = useState({})
+  useEffect(() => {
+    const fetchPayment = async () => {
+      const response = await axios.get(
+        `http://localhost:5000/api/payments/payment-details/${user._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setPayment(response.data[0]); // Store the first payment record
+    };
+    fetchPayment();
+  }, []);
+
+  const handelplaceorder= () =>{
+    if(!payment.paymentId){
+      alert("Please choose your subscription plan")
+      navigate("/")
+    }
+    navigate("/orderform")
+  }
+
   return (
     <>
     <Navbar/>
@@ -91,7 +116,7 @@ const Cart = () => {
                 user ? 
                 <button
                 className="mt-4 bg-orange-500 text-white px-6 py-2 rounded-lg w-full"
-                onClick={() => navigate("/orderform")}
+                onClick={handelplaceorder}
               >
                 Place Order
               </button> 
