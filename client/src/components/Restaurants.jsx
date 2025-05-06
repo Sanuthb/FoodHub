@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-const Restaurants = (fetchRestaurants) => {
+const Restaurants = ({fetchRestaurants}) => {
   const { token } = useSelector((state) => state.auth);
 
   const [formData, setFormData] = useState({
